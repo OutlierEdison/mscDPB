@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset='UTF-8'>
+	<title></title>
+</head>
+<style>
+html,body{padding: 0; margin: 0}
+#serverData{margin: 10px 0;}
+#serverData>span{margin-right: 10px;cursor:pointer;color: blue;text-decoration:underline}
+#serverData>span:hover{color: red}
+a:hover{color: red}
+#list{width: 100%;height:240px;overflow: auto}
+#list>div{display:none;box-sizing:border-box;word-break:break-all;}
+#list>.Server{display: block}
+#buttonDIV{text-align:center;}
+#buttonDIV>input{margin-right:10px;}
+
+#serverTextarea{border-radius: 5px;font-size: 12px;padding: 6px 6px;line-height: 20px;width:100%;box-sizing: border-box;height: 60px}
+</style>
+
+<body> 
+	<div style="margin: 20% 20%;border: 1px solid #dedede;border-radius: 5px;min-height:400px;padding: 16px 16px;margin-top: 8%;background:#dedede">
+		<div style="color: #333;text-align:center;border-bottom:4px solid blue;padding-bottom:10px;">
+			Boosting DNA-protein binding prediction with multi-scale complementary feature from Chip-seq
+		</div>
+		<div id="serverData">
+		<span onclick="top0()">Server</span>
+		<span onclick="Data()">Data</span>
+		<span onclick="Citation()">Citation</span>
+		<span onclick="ReadMe()">ReadMe</span>
+		<span onclick="Example()">Example</span>		
+		</div>
+		<div id="list">
+			<div class="Server">
+				<form method="POST" action="/test_action/" enctype="multipart/form-data" style="overflow:hidden">
+					{% csrf_token %}
+					<div >
+					    <h5>Please input your DNA sequence(default one sequence)
+							<textarea id="serverTextarea" class="form-control" name="sequences" style="color:#8E8E8E;margin-top:0.5" placeholder='Input sequence: fasta format'></textarea>
+					    </h5>
+						<h5 >Please input the name of the selected model(eg: m1)
+						    <center>
+								<textarea id="area" class="form-control" name="model_name" style="color:#8E8E8E;margin-top:0;margin-right: 10px" placeholder='Input model_name'></textarea>
+	                        </center>
+						</h5>
+					</div >
+					<div id="buttonDIV" >
+						<input type="submit" value="Run" style="color:blue;cursor:pointer ;margin-top: 1%"/>
+						<input type="button" onclick="clearInput()" value="Clear" style="color:blue ;cursor:pointer">
+					</div>
+					
+                </form>
+			</div>
+			
+			<div class="data">
+				
+				<h5>The first train data can be downloaded from
+					<a href="/download_template" >here</a>
+				</h5>
+				<h5>The first test data can be downloaded from
+					<a href="/download_test" >here</a>
+				</h5>
+				<h5>The index corresponding to 690 datasets can be downloaded from
+					<a href="/download_name" >here</a>
+				</h5>
+			
+				<h5>The first dataset of 690 datasets is provided here.</h5>
+			</div>
+			<div class="citation">
+				<div style='margin-top: 2%'></div>
+				
+				<h5>Xiuquan Du, Jiajia Hu Boosting DNA-protein binding prediction with multi-scale complementary feature from Chip-seq. Submitted.</h5>
+			</div>
+			<div class="readMe">
+				<div style='margin-top: 2%'> 
+					<h5>The detailed steps to use the server are as follows:</h5>
+				</div>
+				<div ><font size="2" >  Step 1.  Please click the "Example" button to get the query sequence and paste it directly into the text area provided by the web server. The default setting is to input a sequence, which must be in FASTA format.</font></div>
+				<div><font size="2" >  Step 2.  Here we abbreviate 690 models as m1, m2, m3... m690. Due to factors such as file size and network speed, we provide 10 models. From m1 to m10. Please manually fill in the name of the model you want to select in the specified location. For example: m1.</font></div>
+				<div><font size="2" >  Step 3.  Please click the "Run" button to predict the input DNA sequence. The prediction results include query sequence ID, prediction probability, threshold setting, prediction label and prediction status.</font></div>
+				<div><font size="2" >  Step 4.  Please click the "Data" button to download the dataset used in this study and the index file corresponding to the dataset. The downloaded data is named by adding index instead of the real name of the corresponding dataset.</font></div>
+				<div style='margin-top: 1%'><font size="2" >Fasta format:</font ></div>
+				<div><font size="2" >>chr20:42901189-42901289 CAGTTGGCCTCATTGTGAGATCGCCTCCAGCTGGCAGACCCAGAGAAGTGCAGAAGGGGCTCATCCAGGCCTGGGGTTTGCAAAGGGAACACACAAGTAGA 1</font ></div>
+				<div style='margin-top: 1%'><font size="2" >Contact us:</font ></div>
+				<div><font size="2" >dxqllp@163.com</font ></div>
+				<div style='margin-top: 1%'><font size="2" >Reference:</font ></div>
+				<div><font size="2" >Xiuquan Du, Jiajia Hu Boosting DNA-protein binding prediction with multi-scale complementary feature from Chip-seq. Submitted.</font ></div>
+			</div>
+			<div class="fasta_example">
+				<div style='margin-top: 2%'></div>
+				<div style='margin-top: 2%'><h5 >>chr20:42901189-42901289 CAGTTGGCCTCATTGTGAGATCGCCTCCAGCTGGCAGACCCAGAGAAGTGCAGAAGGGGCTCATCCAGGCCTGGGGTTTGCAAAGGGAACACACAAGTAGA 1</h5></div>
+				<div style='margin-top: 2%'><h5>>chr12:94136249-94136349 CCAGCGCGGGGAGGCGGCGCCGACTGCCGGGGGGCGCCTGCAAGACCTGTTTATTTGCATTTGTCCAATTTGGCTCAAGTGAAAGGTAAATACGGAGCGAT 1</h5></div>
+				<div style='margin-top: 2%'><h5 >>chr22:31159862-31159962_shuf CAGGCTTGATCCCTAGCTTGGTAACTCTCGAACACTCTTTCCCCCAATCTAAAGCTTTGAGTAGTTAAACAAGGCGGATTGGAGGAGCAGGTGGTTTTCAA 0</h5></div>
+			</div>
+		</div>
+		<div>
+			<hr style="height: 6px;background: blue;border: none">
+			<div style="font-size: 14px"><span style="font-size: 16px;font-weight: bold">Contact us:</span> any question about this, please Email to dxqllp@163.com</div>
+		</div>
+	</div>
+</body>
+<script>
+function top0(){
+	var Server=document.getElementsByClassName("Server")[0];
+	Server.style.cssText="display: block";
+	var citation=document.getElementsByClassName("citation")[0];
+	citation.style.cssText="display: none";
+	var data=document.getElementsByClassName("data")[0];
+	data.style.cssText="display: none";
+	var readMe=document.getElementsByClassName("readMe")[0];
+	readMe.style.cssText="display: none";
+	var fasta_example=document.getElementsByClassName("fasta_example")[0];
+	fasta_example.style.cssText="display: none";
+}
+function Data(){
+	var data=document.getElementsByClassName("data")[0];
+	data.style.cssText="display: block";
+	var citation=document.getElementsByClassName("citation")[0];
+	citation.style.cssText="display: none";
+	var Server=document.getElementsByClassName("Server")[0];
+	Server.style.cssText="display: none";
+	var readMe=document.getElementsByClassName("readMe")[0];
+	readMe.style.cssText="display: none";
+	var fasta_example=document.getElementsByClassName("fasta_example")[0];
+	fasta_example.style.cssText="display: none";
+}
+function Citation(){
+	var data=document.getElementsByClassName("data")[0];
+	data.style.cssText="display: none";
+	var citation=document.getElementsByClassName("citation")[0];
+	citation.style.cssText="display: block";
+	var Server=document.getElementsByClassName("Server")[0];
+	Server.style.cssText="display: none";
+	var readMe=document.getElementsByClassName("readMe")[0];
+	readMe.style.cssText="display: none";
+	var fasta_example=document.getElementsByClassName("fasta_example")[0];
+	fasta_example.style.cssText="display: none";
+}
+function ReadMe(){
+	var data=document.getElementsByClassName("data")[0];
+	data.style.cssText="display: none";
+	var citation=document.getElementsByClassName("citation")[0];
+	citation.style.cssText="display: none";
+	var Server=document.getElementsByClassName("Server")[0];
+	Server.style.cssText="display: none";
+	var readMe=document.getElementsByClassName("readMe")[0];
+	readMe.style.cssText="display: block";
+	var fasta_example=document.getElementsByClassName("fasta_example")[0];
+	fasta_example.style.cssText="display: none";
+}
+function Example(){
+	var data=document.getElementsByClassName("data")[0];
+	data.style.cssText="display: none";
+	var citation=document.getElementsByClassName("citation")[0];
+	citation.style.cssText="display: none";
+	var Server=document.getElementsByClassName("Server")[0];
+	Server.style.cssText="display: none";
+	var readMe=document.getElementsByClassName("readMe")[0];
+	readMe.style.cssText="display: none";
+	var fasta_example=document.getElementsByClassName("fasta_example")[0];
+	fasta_example.style.cssText="display: block";
+}
+function clearInput(){
+	var serverTextarea=document.getElementById("serverTextarea");
+	area=document.getElementById("area");
+	serverTextarea.value = "";
+	area.value="";
+}
+</script>
+</html>
+
+

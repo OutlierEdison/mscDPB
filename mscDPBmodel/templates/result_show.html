@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset='UTF-8'>
+	<title></title>
+</head>
+<body style="padding: 0 10px">
+<div style="text-align:center;margin-bottom: 20px;font-size:20px;font-weight:bold;margin-top:20px">Boosting DNA-protein binding prediction with multi-scale complementary feature from Chip-seq</div>
+<div >Input sequence:</div>
+<div>{{list_seq}}</div>
+
+<div style='margin-top: 2%'>Prediction summary:</div>
+<table style="width:100%;text-align:center;" border="1">
+<tbody>
+<tr>
+	<td style="width:30%">Id</td>
+	<td style="width:20%">Prob</td>
+	<td style="width:20%">Threshold</td>
+	<td style="width:20%">Predict_label</td>
+	<td style="width:20%">N/B</td>
+	
+</tr>
+<tr>
+	<td style="">{{id}}</td>
+	<td style="">{{list_pro_value}}</td>
+	<td style="">{{threshold}}</td>
+	<td style="">{{list_predict_label}}</td>
+	<td style="">{{label}}</td>
+</tr>
+</tbody>
+</table>
+<div style="margin-top: 40px">"Id" means the corresponding DNA sequence fragment identification.</div>
+<div style=>"Prob" means the predicted probability value of whether DNA fragment binds to protein or not.</div>
+<div style=>"Threshold" means the threshold set. If it is greater than this threshold, it binds to the protein, and vice versa.</div>
+<div style=>"Predict_label" means that if the predicted value exceeds the threshold value, "Predict_label" is set to 1, otherwise, it is set to 0.</div>
+<div style=>"N/B" means the predicted state("N" is non DNA-protein binding, "B" is DNA-protein binding).</div>
+</body>
+</html>
